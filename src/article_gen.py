@@ -96,7 +96,8 @@ def to_html(body_markdown: str, cfg: dict) -> str:
     def replace_aff(m: re.Match) -> str:
         key = m.group(1).strip()
         link = links.get(key)
-        if not link:
+        # 未設定・仮URLのままの案件はボタンを出さない(実リンク設定後のビルドで出現する)
+        if not link or not link.get("url") or "example.com" in link["url"]:
             return ""
         return AFF_BUTTON_HTML.format(url=link["url"], label=link["label"])
 

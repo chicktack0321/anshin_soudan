@@ -27,7 +27,7 @@ def _pick_topic() -> str:
     return ""
 
 
-def cmd_create(cfg: dict, demo: bool = False) -> int | None:
+def cmd_create(cfg: dict, demo: bool = False, topic: str | None = None) -> int | None:
     from . import tts, video_builder
 
     tts.check_engine(cfg)  # 先に確認し、API課金前に失敗させる
@@ -49,7 +49,7 @@ def cmd_create(cfg: dict, demo: bool = False) -> int | None:
     else:
         from . import script_gen
 
-        topic = _pick_topic()
+        topic = topic or _pick_topic()
         if not topic:
             print("未使用のネタがありません。Claudeで新ネタを生成します...")
             append_topics(script_gen.generate_topics(db.used_topics(), cfg))
@@ -96,10 +96,9 @@ def cmd_create(cfg: dict, demo: bool = False) -> int | None:
 
         try:
             article = article_gen.generate_article(script["title"], script, cfg)
-            html = article_gen.to_html(article["body_markdown"], cfg)
             db.save_article(
                 video_id, article["slug"], article["title"],
-                article["lead"], html, article["category"],
+                article["lead"], article["body_markdown"], article["category"],
             )
             print(f"  記事: {article['title']}")
         except Exception as e:
@@ -183,6 +182,7 @@ def main() -> None:
         choices=["create", "upload", "site", "run", "list", "expand-topics", "demo"],
     )
     parser.add_argument("--id", type=int, help="uploadで投稿する動画IDを指定(デモ動画のテスト投稿等)")
+    parser.add_argument("--topic", help="createで使うネタを直接指定(topics.yamlの順番を使わない)")
     parser.add_argument(
         "--privacy", choices=["public", "unlisted", "private"],
         help="uploadの公開設定を一時的に上書き(テストは unlisted 推奨)",
@@ -196,7 +196,7 @@ def main() -> None:
     cfg = load_config()
 
     if args.command == "create":
-        cmd_create(cfg)
+        cmd_create(cfg, topic=args.topic)
     elif args.command == "demo":
         cmd_create(cfg, demo=True)
     elif args.command == "upload":

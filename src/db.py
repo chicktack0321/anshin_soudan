@@ -35,6 +35,8 @@ def _conn() -> sqlite3.Connection:
     cols = {r["name"] for r in conn.execute("PRAGMA table_info(videos)")}
     if "category" not in cols:
         conn.execute("ALTER TABLE videos ADD COLUMN category TEXT")
+    if "article_markdown" not in cols:
+        conn.execute("ALTER TABLE videos ADD COLUMN article_markdown TEXT")
     return conn
 
 
@@ -64,13 +66,16 @@ def save_video_path(video_id: int, path: str) -> None:
 
 
 def save_article(
-    video_id: int, slug: str, title: str, lead: str, html: str, category: str
+    video_id: int, slug: str, title: str, lead: str,
+    markdown: str, category: str,
 ) -> None:
+    """記事はMarkdownで保存し、HTML化はサイトビルド時に行う
+    (アフィリエイトリンクの設定変更が過去記事にも反映されるように)"""
     with _conn() as c:
         c.execute(
             "UPDATE videos SET article_slug=?, article_title=?, article_lead=?, "
-            "article_html=?, category=? WHERE id=?",
-            (slug, title, lead, html, category, video_id),
+            "article_markdown=?, category=? WHERE id=?",
+            (slug, title, lead, markdown, category, video_id),
         )
 
 

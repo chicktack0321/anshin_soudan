@@ -8,6 +8,7 @@
     about.html ほか       固定ページ (site/pages/*.md)
     sitemap.xml           検索エンジン向け
 """
+import re
 import shutil
 from datetime import date
 from pathlib import Path
@@ -16,11 +17,29 @@ import markdown as md
 from jinja2 import Environment, FileSystemLoader
 
 from . import db
+from .article_gen import to_html
 from .categories import CATEGORIES, DEFAULT_CATEGORY, category_list
 from .config import ROOT
 
 
-def _load_articles() -> list[dict]:
+def _strip_placeholder_aff(html: str) -> str:
+    """仮URL(example.com)のままのアフィリエイトボタンを除去(旧形式の記事HTML用)"""
+    return re.sub(
+        r'<div class="aff-box">.*?</div>\s*',
+        lambda m: "" if "example.com" in m.group(0) else m.group(0),
+        html,
+        flags=re.DOTALL,
+    )
+
+
+def _article_html(row, cfg: dict) -> str:
+    """Markdown保存の記事はビルド時にHTML化(アフィリリンク設定を毎回反映)"""
+    if row["article_markdown"]:
+        return to_html(row["article_markdown"], cfg)
+    return _strip_placeholder_aff(row["article_html"] or "")
+
+
+def _load_articles(cfg: dict) -> list[dict]:
     articles = []
     for row in db.published_articles():
         cat = row["category"] if row["category"] in CATEGORIES else DEFAULT_CATEGORY
@@ -29,7 +48,7 @@ def _load_articles() -> list[dict]:
                 "slug": row["article_slug"],
                 "title": row["article_title"],
                 "lead": row["article_lead"] or "",
-                "html": row["article_html"],
+                "html": _article_html(row, cfg),
                 "date": (row["created_at"] or "")[:10],
                 "youtube_id": row["youtube_id"],
                 "category": cat,
@@ -72,7 +91,7 @@ def build_site(cfg: dict) -> Path:
         "categories": categories,
     }
 
-    articles = _load_articles()
+    articles = _load_articles(cfg)
     counts: dict[str, int] = {}
     for a in articles:
         counts[a["category"]] = counts.get(a["category"], 0) + 1
