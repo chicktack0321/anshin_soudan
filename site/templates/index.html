@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="page-title">新着記事</h1>
+<ul class="article-list">
+{% for a in articles %}
+  <li class="article-card">
+    <a href="articles/{{ a.slug }}.html">
+      <span class="article-date">{{ a.date }}</span>
+      <span class="article-title">{{ a.title }}</span>
+      <span class="article-lead">{{ a.lead }}</span>
+    </a>
+  </li>
+{% else %}
+  <li>記事はまだありません。</li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,14 @@
+# 秘密情報
+config/config.yaml
+config/client_secrets.json
+data/
+output/
+*.log
+
+# docs/ は GitHub Pages で公開するサイト本体なので追跡対象
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/

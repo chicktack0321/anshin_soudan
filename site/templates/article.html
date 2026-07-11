@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} | {{ site.site_name }}{% endblock %}
+{% block description %}{{ article.lead }}{% endblock %}
+{% block css_path %}../style.css{% endblock %}
+{% block home_path %}../index.html{% endblock %}
+{% block content %}
+<article>
+  <p class="article-date">{{ article.date }}</p>
+  <h1 class="page-title">{{ article.title }}</h1>
+  <p class="lead">{{ article.lead }}</p>
+  {% if article.youtube_id %}
+  <div class="video-embed">
+    <iframe src="https://www.youtube.com/embed/{{ article.youtube_id }}" title="{{ article.title }}"
+      frameborder="0" allowfullscreen></iframe>
+  </div>
+  {% endif %}
+  <div class="article-body">
+  {{ article.html }}
+  </div>
+  <p class="back-link"><a href="../index.html">← 記事一覧へ戻る</a></p>
+</article>
+{% endblock %}

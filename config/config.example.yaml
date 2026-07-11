@@ -1,0 +1,78 @@
+# ============================================================
+# 設定ファイル
+# このファイルを config.yaml にコピーして各項目を設定してください
+#   copy config\config.example.yaml config\config.yaml
+# ============================================================
+
+# --- Claude API (台本・記事生成) ---
+anthropic:
+  # 空欄の場合は環境変数 ANTHROPIC_API_KEY を使用
+  api_key: ""
+  # 台本量産にはコスト効率の良い claude-sonnet-5 を推奨
+  model: "claude-sonnet-5"
+
+# --- VOICEVOX (音声合成・無料) ---
+# https://voicevox.hiroshiba.jp/ からインストールして起動しておくこと
+voicevox:
+  url: "http://127.0.0.1:50021"
+  # 話者ID: 13=青山龍星(落ち着いた男性・シニア向け推奨) 11=玄野武宏 2=四国めたん 3=ずんだもん
+  speaker: 13
+  speed: 1.0          # 50代以上向けはゆっくりめ(0.95〜1.0)推奨
+
+# --- 動画設定 ---
+video:
+  width: 1080
+  height: 1920
+  fps: 30
+  max_seconds: 60     # ショート動画の目安。超えたら警告
+  channel_label: "知らないと損するお金の話"   # 各スライド上部に表示
+  font: "C:/Windows/Fonts/BIZ-UDGothicB.ttc"
+
+# --- YouTube 自動投稿 ---
+youtube:
+  client_secrets: "config/client_secrets.json"   # GCPからダウンロードしたOAuthクレデンシャル
+  privacy_status: "public"    # public / unlisted / private
+  category_id: "27"           # 27=教育
+  default_tags:
+    - "お金"
+    - "年金"
+    - "節約"
+    - "50代"
+    - "60代"
+    - "シニア"
+
+# --- 誘導先HP (静的サイト) ---
+site:
+  site_name: "50代からのお金の教科書"
+  base_url: "https://example.github.io/money-site/"   # 公開後のURLに変更
+  author: "運営者名"
+  description: "50代・60代のための年金・節約・お金の情報サイト"
+  output_dir: "docs"    # GitHub Pages なら docs/ のまま
+
+# --- アフィリエイト ---
+# ASP(A8.net・もしもアフィリエイト等)で取得したリンクを登録。
+# 記事内の {{AFF:キー名}} がボタンに置換される。
+affiliate:
+  disclosure: "本サイトはアフィリエイト広告(A8.net等)を利用しています。"
+  links:
+    # キー名:
+    #   label: ボタンに表示する文言
+    #   url: アフィリエイトリンクURL
+    #   description: どんな案件か(記事生成AIへのヒント)
+    kakeibo_app:
+      label: "無料で使える家計簿アプリはこちら"
+      url: "https://example.com/your-affiliate-link-1"
+      description: "家計簿アプリの無料登録案件"
+    hoken_soudan:
+      label: "保険の無料相談を予約する"
+      url: "https://example.com/your-affiliate-link-2"
+      description: "保険見直し無料相談の申込案件"
+
+# --- 動画概要欄に必ず入れる文面 ---
+description_footer: |
+  ▼もっと詳しい解説はこちら(ブログ)
+  {site_url}
+
+  ※本動画は一般的な情報の提供を目的としており、特定の金融商品の勧誘や個別の助言ではありません。
+  ※制度の内容は変更される場合があります。最新情報は公式サイトをご確認ください。
+  #お金 #年金 #節約 #シニア #Shorts

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ site.site_name }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
+<link rel="stylesheet" href="{% block css_path %}style.css{% endblock %}">
+</head>
+<body>
+<header class="site-header">
+  <a href="{% block home_path %}index.html{% endblock %}" class="site-title">{{ site.site_name }}</a>
+  <p class="site-desc">{{ site.description }}</p>
+</header>
+<p class="disclosure">{{ disclosure }}</p>
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer class="site-footer">
+  <p>※当サイトは一般的な情報の提供を目的としており、特定の金融商品の勧誘や個別の投資助言を行うものではありません。制度の内容は変更される場合がありますので、最新情報は公式サイトでご確認ください。</p>
+  <p>&copy; {{ year }} {{ site.site_name }}</p>
+</footer>
+</body>
+</html>
