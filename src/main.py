@@ -8,10 +8,10 @@
   python -m src.main list            生成・投稿履歴を表示
   python -m src.main expand-topics   Claudeで新しいネタを20個追加
   python -m src.main demo            APIなしでサンプル動画を生成(動作確認用)
+  python -m src.main rebuild         投稿前の動画を保存済み台本から再生成(デザイン反映用)
 """
 import argparse
 import json
-import shutil
 import sys
 from pathlib import Path
 
@@ -28,7 +28,7 @@ def _pick_topic() -> str:
 
 
 def cmd_create(cfg: dict, demo: bool = False, topic: str | None = None) -> int | None:
-    from . import tts, video_builder
+    from . import tts
 
     tts.check_engine(cfg)  # 先に確認し、API課金前に失敗させる
 
@@ -65,24 +65,9 @@ def cmd_create(cfg: dict, demo: bool = False, topic: str | None = None) -> int |
     db.save_script(video_id, script["title"], script)
     print(f"  タイトル: {script['title']} ({len(script['scenes'])}シーン)")
 
-    work_dir = OUTPUT_DIR / f"work_{video_id}"
-    work_dir.mkdir(parents=True, exist_ok=True)
-    scenes = script["scenes"]
-
     print(f"[2/4] 音声合成中 (VOICEVOX)")
-    for i, scene in enumerate(scenes):
-        tts.synthesize(scene["narration"], work_dir / f"scene_{i}.wav", cfg)
-
     print(f"[3/4] 動画生成中")
-    from .video_builder import render_slide, build_video
-
-    for i, scene in enumerate(scenes):
-        render_slide(
-            scene["caption"], i, len(scenes), cfg,
-            work_dir / f"slide_{i}.png", is_last=(i == len(scenes) - 1),
-        )
-    out_path = OUTPUT_DIR / f"short_{video_id}.mp4"
-    duration = build_video(work_dir, len(scenes), cfg, out_path)
+    out_path, duration = _generate_media(video_id, script["scenes"], cfg)
     db.save_video_path(video_id, str(out_path))
     if demo:
         db.set_status(video_id, "demo")  # デモ動画は投稿対象にしない
@@ -104,8 +89,52 @@ def cmd_create(cfg: dict, demo: bool = False, topic: str | None = None) -> int |
         except Exception as e:
             print(f"  ⚠ 記事生成に失敗(動画は生成済み): {e}")
 
-    shutil.rmtree(work_dir, ignore_errors=True)
     return video_id
+
+
+def _generate_media(video_id: int, scenes: list[dict], cfg: dict) -> tuple[Path, float]:
+    """音声合成→スライド描画→動画組み立て。(出力パス, 総尺) を返す"""
+    import shutil as _shutil
+
+    from . import tts
+    from .video_builder import render_slide, build_video
+
+    work_dir = OUTPUT_DIR / f"work_{video_id}"
+    work_dir.mkdir(parents=True, exist_ok=True)
+
+    for i, scene in enumerate(scenes):
+        tts.synthesize(scene["narration"], work_dir / f"scene_{i}.wav", cfg)
+        render_slide(
+            scene["caption"], i, len(scenes), cfg,
+            work_dir / f"slide_{i}.png", is_last=(i == len(scenes) - 1),
+        )
+    out_path = OUTPUT_DIR / f"short_{video_id}.mp4"
+    duration = build_video(work_dir, len(scenes), cfg, out_path)
+    _shutil.rmtree(work_dir, ignore_errors=True)
+    return out_path, duration
+
+
+def cmd_rebuild(cfg: dict, video_id: int | None = None) -> None:
+    """投稿前(ready)の動画を、保存済みの台本から再生成する(デザイン変更の反映用)"""
+    from . import tts
+
+    tts.check_engine(cfg)
+    if video_id is not None:
+        rows = [db.get_video(video_id)]
+        if not rows[0]:
+            print(f"ID {video_id} の動画が見つかりません。")
+            return
+    else:
+        rows = [r for r in db.list_videos() if r["status"] == "ready"]
+        if not rows:
+            print("再生成対象(ready)の動画がありません。")
+            return
+
+    for row in rows:
+        script = json.loads(row["script_json"])
+        print(f"再生成中: [{row['id']}] {row['title']}")
+        out_path, duration = _generate_media(row["id"], script["scenes"], cfg)
+        print(f"  完成: {out_path} ({duration:.1f}秒)")
 
 
 def cmd_upload(cfg: dict, video_id: int | None = None, privacy: str | None = None) -> None:
@@ -179,7 +208,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument(
         "command",
-        choices=["create", "upload", "site", "run", "list", "expand-topics", "demo"],
+        choices=["create", "upload", "site", "run", "list", "expand-topics", "demo", "rebuild"],
     )
     parser.add_argument("--id", type=int, help="uploadで投稿する動画IDを指定(デモ動画のテスト投稿等)")
     parser.add_argument("--topic", help="createで使うネタを直接指定(topics.yamlの順番を使わない)")
@@ -201,6 +230,8 @@ def main() -> None:
         cmd_create(cfg, demo=True)
     elif args.command == "upload":
         cmd_upload(cfg, video_id=args.id, privacy=args.privacy)
+    elif args.command == "rebuild":
+        cmd_rebuild(cfg, video_id=args.id)
     elif args.command == "site":
         cmd_site(cfg)
     elif args.command == "expand-topics":
