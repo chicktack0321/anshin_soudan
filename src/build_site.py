@@ -37,6 +37,7 @@ def build_site(cfg: dict) -> Path:
 
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "articles").mkdir(exist_ok=True)
+    (out_dir / ".nojekyll").touch()  # GitHub PagesにJekyll処理をさせない
 
     index_tpl = env.get_template("index.html")
     (out_dir / "index.html").write_text(
