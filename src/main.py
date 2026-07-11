@@ -97,7 +97,10 @@ def cmd_create(cfg: dict, demo: bool = False) -> int | None:
         try:
             article = article_gen.generate_article(script["title"], script, cfg)
             html = article_gen.to_html(article["body_markdown"], cfg)
-            db.save_article(video_id, article["slug"], article["title"], article["lead"], html)
+            db.save_article(
+                video_id, article["slug"], article["title"],
+                article["lead"], html, article["category"],
+            )
             print(f"  記事: {article['title']}")
         except Exception as e:
             print(f"  ⚠ 記事生成に失敗(動画は生成済み): {e}")

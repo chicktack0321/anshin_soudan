@@ -1,22 +1,50 @@
 {% extends "base.html" %}
 {% block title %}{{ article.title }} | {{ site.site_name }}{% endblock %}
 {% block description %}{{ article.lead }}{% endblock %}
-{% block css_path %}../style.css{% endblock %}
-{% block home_path %}../index.html{% endblock %}
 {% block content %}
+<nav class="breadcrumb" aria-label="現在地">
+  <a href="{{ root }}index.html">ホーム</a> &gt;
+  <a href="{{ root }}category/{{ article.category }}.html">{{ article.category_name }}</a> &gt;
+  <span>{{ article.title }}</span>
+</nav>
 <article>
-  <p class="article-date">{{ article.date }}</p>
+  <p class="article-meta">
+    <span class="article-date">{{ article.date }}</span>
+    <a class="cat-chip" href="{{ root }}category/{{ article.category }}.html">{{ article.category_emoji }} {{ article.category_name }}</a>
+  </p>
   <h1 class="page-title">{{ article.title }}</h1>
   <p class="lead">{{ article.lead }}</p>
   {% if article.youtube_id %}
   <div class="video-embed">
     <iframe src="https://www.youtube.com/embed/{{ article.youtube_id }}" title="{{ article.title }}"
-      frameborder="0" allowfullscreen></iframe>
+      frameborder="0" allowfullscreen loading="lazy"></iframe>
+    <p class="video-note">▲ 1分でわかる動画版もあります</p>
   </div>
   {% endif %}
   <div class="article-body">
   {{ article.html }}
   </div>
-  <p class="back-link"><a href="../index.html">← 記事一覧へ戻る</a></p>
+
+  <div class="check-box">
+    <p class="check-box-title">✅ 手続き・ご判断の前に</p>
+    <p>制度の内容は変更されることがあります。実際の手続きの際は、年金事務所・税務署・お住まいの市区町村など公式の窓口で最新情報をご確認ください。</p>
+  </div>
 </article>
+
+{% if related %}
+<section class="related">
+  <h2 class="section-title">あわせて読みたい</h2>
+  <ul class="article-list">
+  {% for a in related %}
+    <li class="article-card">
+      <a href="{{ root }}articles/{{ a.slug }}.html">
+        <span class="article-title">{{ a.title }}</span>
+        <span class="article-lead">{{ a.lead }}</span>
+      </a>
+    </li>
+  {% endfor %}
+  </ul>
+</section>
+{% endif %}
+<p class="back-link"><a href="{{ root }}category/{{ article.category }}.html">← {{ article.category_name }}の記事一覧へ</a></p>
 {% endblock %}

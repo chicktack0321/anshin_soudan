@@ -25,12 +25,16 @@ def _conn() -> sqlite3.Connection:
             article_title TEXT,
             article_html TEXT,
             article_lead TEXT,
-            status TEXT DEFAULT 'draft',   -- draft / ready / uploaded / failed
+            status TEXT DEFAULT 'draft',   -- draft / ready / uploaded / failed / demo
             created_at TEXT,
             uploaded_at TEXT
         )
         """
     )
+    # 後から追加したカラムのマイグレーション
+    cols = {r["name"] for r in conn.execute("PRAGMA table_info(videos)")}
+    if "category" not in cols:
+        conn.execute("ALTER TABLE videos ADD COLUMN category TEXT")
     return conn
 
 
@@ -59,11 +63,14 @@ def save_video_path(video_id: int, path: str) -> None:
         c.execute("UPDATE videos SET video_path=?, status='ready' WHERE id=?", (path, video_id))
 
 
-def save_article(video_id: int, slug: str, title: str, lead: str, html: str) -> None:
+def save_article(
+    video_id: int, slug: str, title: str, lead: str, html: str, category: str
+) -> None:
     with _conn() as c:
         c.execute(
-            "UPDATE videos SET article_slug=?, article_title=?, article_lead=?, article_html=? WHERE id=?",
-            (slug, title, lead, html, video_id),
+            "UPDATE videos SET article_slug=?, article_title=?, article_lead=?, "
+            "article_html=?, category=? WHERE id=?",
+            (slug, title, lead, html, category, video_id),
         )
 
 

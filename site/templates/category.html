@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ category.name }}の記事一覧 | {{ site.site_name }}{% endblock %}
+{% block description %}{{ category.description }}{% endblock %}
+{% block content %}
+<nav class="breadcrumb" aria-label="現在地">
+  <a href="{{ root }}index.html">ホーム</a> &gt; <span>{{ category.name }}</span>
+</nav>
+<header class="cat-header">
+  <h1 class="page-title"><span class="cat-emoji-large">{{ category.emoji }}</span>{{ category.name }}</h1>
+  <p class="cat-description">{{ category.description }}</p>
+</header>
+<ul class="article-list">
+{% for a in articles %}
+  <li class="article-card">
+    <a href="{{ root }}articles/{{ a.slug }}.html">
+      <span class="article-meta"><span class="article-date">{{ a.date }}</span></span>
+      <span class="article-title">{{ a.title }}</span>
+      <span class="article-lead">{{ a.lead }}</span>
+    </a>
+  </li>
+{% else %}
+  <li class="no-articles">このカテゴリの記事は準備中です。もうしばらくお待ちください。</li>
+{% endfor %}
+</ul>
+{% endblock %}

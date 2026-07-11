@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>保険・住まいの記事一覧 | 50代からのお金の教科書</title>
+<meta name="description" content="保険の見直しと住まいの備え。払いすぎを防ぎ、これからに備える。">
+<link rel="stylesheet" href="../style.css">
+<script>
+  // ページ描画前に文字サイズ設定を復元(ちらつき防止)
+  if (localStorage.getItem("fontSize") === "large") {
+    document.documentElement.classList.add("large-text");
+  }
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="../index.html" class="site-title">50代からのお金の教科書</a>
+    <p class="site-desc">50代・60代のための年金・節約・お金の情報サイト</p>
+    <div class="font-control" role="group" aria-label="文字の大きさ">
+      <span>文字の大きさ</span>
+      <button type="button" id="font-normal" onclick="setFontSize(false)">標準</button>
+      <button type="button" id="font-large" onclick="setFontSize(true)">大きく</button>
+    </div>
+  </div>
+  <nav class="cat-nav" aria-label="カテゴリ">
+    
+    <a href="../category/nenkin.html"><span class="cat-emoji">🏦</span>年金</a>
+    
+    <a href="../category/setsuyaku.html"><span class="cat-emoji">💰</span>節約・家計</a>
+    
+    <a href="../category/seido.html"><span class="cat-emoji">📋</span>制度・給付金</a>
+    
+    <a href="../category/hoken.html" class="active"><span class="cat-emoji">🏠</span>保険・住まい</a>
+    
+    <a href="../category/sagi.html"><span class="cat-emoji">🛡️</span>詐欺対策</a>
+    
+    <a href="../category/souzoku.html"><span class="cat-emoji">📖</span>相続・終活</a>
+    
+  </nav>
+</header>
+<p class="disclosure">本サイトはアフィリエイト広告(A8.net等)を利用しています。</p>
+<main>
+
+<nav class="breadcrumb" aria-label="現在地">
+  <a href="../index.html">ホーム</a> &gt; <span>保険・住まい</span>
+</nav>
+<header class="cat-header">
+  <h1 class="page-title"><span class="cat-emoji-large">🏠</span>保険・住まい</h1>
+  <p class="cat-description">保険の見直しと住まいの備え。払いすぎを防ぎ、これからに備える。</p>
+</header>
+<ul class="article-list">
+
+  <li class="no-articles">このカテゴリの記事は準備中です。もうしばらくお待ちください。</li>
+
+</ul>
+
+</main>
+<footer class="site-footer">
+  <nav class="footer-nav" aria-label="サイト情報">
+    <a href="../about.html">運営者情報</a>
+    <a href="../privacy.html">プライバシーポリシー</a>
+    <a href="../disclaimer.html">免責事項</a>
+  </nav>
+  <p>※当サイトは一般的な情報の提供を目的としており、特定の金融商品の勧誘や個別の投資助言を行うものではありません。制度の内容は変更される場合がありますので、最新情報は公式サイトでご確認ください。</p>
+  <p class="copyright">&copy; 2026 50代からのお金の教科書</p>
+</footer>
+<script>
+  function setFontSize(large) {
+    document.documentElement.classList.toggle("large-text", large);
+    localStorage.setItem("fontSize", large ? "large" : "normal");
+    updateFontButtons();
+  }
+  function updateFontButtons() {
+    var large = document.documentElement.classList.contains("large-text");
+    document.getElementById("font-normal").classList.toggle("active", !large);
+    document.getElementById("font-large").classList.toggle("active", large);
+  }
+  updateFontButtons();
+</script>
+</body>
+</html>

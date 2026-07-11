@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>免責事項 | 50代からのお金の教科書</title>
+<meta name="description" content="50代・60代のための年金・節約・お金の情報サイト">
+<link rel="stylesheet" href="style.css">
+<script>
+  // ページ描画前に文字サイズ設定を復元(ちらつき防止)
+  if (localStorage.getItem("fontSize") === "large") {
+    document.documentElement.classList.add("large-text");
+  }
+</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-top">
+    <a href="index.html" class="site-title">50代からのお金の教科書</a>
+    <p class="site-desc">50代・60代のための年金・節約・お金の情報サイト</p>
+    <div class="font-control" role="group" aria-label="文字の大きさ">
+      <span>文字の大きさ</span>
+      <button type="button" id="font-normal" onclick="setFontSize(false)">標準</button>
+      <button type="button" id="font-large" onclick="setFontSize(true)">大きく</button>
+    </div>
+  </div>
+  <nav class="cat-nav" aria-label="カテゴリ">
+    
+    <a href="category/nenkin.html"><span class="cat-emoji">🏦</span>年金</a>
+    
+    <a href="category/setsuyaku.html"><span class="cat-emoji">💰</span>節約・家計</a>
+    
+    <a href="category/seido.html"><span class="cat-emoji">📋</span>制度・給付金</a>
+    
+    <a href="category/hoken.html"><span class="cat-emoji">🏠</span>保険・住まい</a>
+    
+    <a href="category/sagi.html"><span class="cat-emoji">🛡️</span>詐欺対策</a>
+    
+    <a href="category/souzoku.html"><span class="cat-emoji">📖</span>相続・終活</a>
+    
+  </nav>
+</header>
+<p class="disclosure">本サイトはアフィリエイト広告(A8.net等)を利用しています。</p>
+<main>
+
+<nav class="breadcrumb" aria-label="現在地">
+  <a href="index.html">ホーム</a> &gt; <span>免責事項</span>
+</nav>
+<article class="article-body static-page">
+<h1>免責事項</h1>
+<h2>情報の性質について</h2>
+<p>当サイト「50代からのお金の教科書」に掲載する情報は、<strong>一般的な情報の提供を目的としたもの</strong>であり、特定の金融商品の勧誘、個別の投資助言・税務助言・法律相談を行うものではありません。</p>
+<p>年金・税金・保険などの制度に関する記述は、記事作成時点の情報に基づいています。<strong>制度の内容は法改正等により変更される場合があります</strong>ので、実際の手続きやご判断の際は、必ず以下のような公式情報をご確認ください。</p>
+<ul>
+<li>年金について: 日本年金機構、ねんきんダイヤル、年金事務所</li>
+<li>税金について: 国税庁、お住まいの地域の税務署</li>
+<li>給付金・助成制度について: お住まいの市区町村の窓口</li>
+</ul>
+<h2>損害等の責任について</h2>
+<p>当サイトの情報を利用したことによって生じたいかなる損害についても、当サイトは責任を負いかねます。最終的なご判断は、ご自身の状況に合わせて、必要に応じて専門家(社会保険労務士・税理士・ファイナンシャルプランナー等)にご相談のうえ行ってください。</p>
+<h2>広告について</h2>
+<p>当サイトはアフィリエイト広告を利用しています。広告として掲載しているサービス・商品に関するお問い合わせやお申し込みに関するトラブルについては、リンク先の事業者に直接お問い合わせください。</p>
+<h2>著作権について</h2>
+<p>当サイトに掲載している文章・画像等の無断転載を禁じます。引用される場合は、引用元として当サイトへのリンクを明記してください。</p>
+</article>
+
+</main>
+<footer class="site-footer">
+  <nav class="footer-nav" aria-label="サイト情報">
+    <a href="about.html">運営者情報</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="disclaimer.html">免責事項</a>
+  </nav>
+  <p>※当サイトは一般的な情報の提供を目的としており、特定の金融商品の勧誘や個別の投資助言を行うものではありません。制度の内容は変更される場合がありますので、最新情報は公式サイトでご確認ください。</p>
+  <p class="copyright">&copy; 2026 50代からのお金の教科書</p>
+</footer>
+<script>
+  function setFontSize(large) {
+    document.documentElement.classList.toggle("large-text", large);
+    localStorage.setItem("fontSize", large ? "large" : "normal");
+    updateFontButtons();
+  }
+  function updateFontButtons() {
+    var large = document.documentElement.classList.contains("large-text");
+    document.getElementById("font-normal").classList.toggle("active", !large);
+    document.getElementById("font-large").classList.toggle("active", large);
+  }
+  updateFontButtons();
+</script>
+</body>
+</html>

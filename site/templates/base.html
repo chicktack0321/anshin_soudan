@@ -5,20 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}{{ site.site_name }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
-<link rel="stylesheet" href="{% block css_path %}style.css{% endblock %}">
+<link rel="stylesheet" href="{{ root }}style.css">
+<script>
+  // ページ描画前に文字サイズ設定を復元(ちらつき防止)
+  if (localStorage.getItem("fontSize") === "large") {
+    document.documentElement.classList.add("large-text");
+  }
+</script>
 </head>
 <body>
 <header class="site-header">
-  <a href="{% block home_path %}index.html{% endblock %}" class="site-title">{{ site.site_name }}</a>
-  <p class="site-desc">{{ site.description }}</p>
+  <div class="header-top">
+    <a href="{{ root }}index.html" class="site-title">{{ site.site_name }}</a>
+    <p class="site-desc">{{ site.description }}</p>
+    <div class="font-control" role="group" aria-label="文字の大きさ">
+      <span>文字の大きさ</span>
+      <button type="button" id="font-normal" onclick="setFontSize(false)">標準</button>
+      <button type="button" id="font-large" onclick="setFontSize(true)">大きく</button>
+    </div>
+  </div>
+  <nav class="cat-nav" aria-label="カテゴリ">
+    {% for c in categories %}
+    <a href="{{ root }}category/{{ c.slug }}.html"{% if current_category == c.slug %} class="active"{% endif %}><span class="cat-emoji">{{ c.emoji }}</span>{{ c.name }}</a>
+    {% endfor %}
+  </nav>
 </header>
 <p class="disclosure">{{ disclosure }}</p>
 <main>
 {% block content %}{% endblock %}
 </main>
 <footer class="site-footer">
+  <nav class="footer-nav" aria-label="サイト情報">
+    <a href="{{ root }}about.html">運営者情報</a>
+    <a href="{{ root }}privacy.html">プライバシーポリシー</a>
+    <a href="{{ root }}disclaimer.html">免責事項</a>
+  </nav>
   <p>※当サイトは一般的な情報の提供を目的としており、特定の金融商品の勧誘や個別の投資助言を行うものではありません。制度の内容は変更される場合がありますので、最新情報は公式サイトでご確認ください。</p>
-  <p>&copy; {{ year }} {{ site.site_name }}</p>
+  <p class="copyright">&copy; {{ year }} {{ site.site_name }}</p>
 </footer>
+<script>
+  function setFontSize(large) {
+    document.documentElement.classList.toggle("large-text", large);
+    localStorage.setItem("fontSize", large ? "large" : "normal");
+    updateFontButtons();
+  }
+  function updateFontButtons() {
+    var large = document.documentElement.classList.contains("large-text");
+    document.getElementById("font-normal").classList.toggle("active", !large);
+    document.getElementById("font-large").classList.toggle("active", large);
+  }
+  updateFontButtons();
+</script>
 </body>
 </html>

@@ -6,32 +6,142 @@
 <title>50代からのお金の教科書</title>
 <meta name="description" content="50代・60代のための年金・節約・お金の情報サイト">
 <link rel="stylesheet" href="style.css">
+<script>
+  // ページ描画前に文字サイズ設定を復元(ちらつき防止)
+  if (localStorage.getItem("fontSize") === "large") {
+    document.documentElement.classList.add("large-text");
+  }
+</script>
 </head>
 <body>
 <header class="site-header">
-  <a href="index.html" class="site-title">50代からのお金の教科書</a>
-  <p class="site-desc">50代・60代のための年金・節約・お金の情報サイト</p>
+  <div class="header-top">
+    <a href="index.html" class="site-title">50代からのお金の教科書</a>
+    <p class="site-desc">50代・60代のための年金・節約・お金の情報サイト</p>
+    <div class="font-control" role="group" aria-label="文字の大きさ">
+      <span>文字の大きさ</span>
+      <button type="button" id="font-normal" onclick="setFontSize(false)">標準</button>
+      <button type="button" id="font-large" onclick="setFontSize(true)">大きく</button>
+    </div>
+  </div>
+  <nav class="cat-nav" aria-label="カテゴリ">
+    
+    <a href="category/nenkin.html"><span class="cat-emoji">🏦</span>年金</a>
+    
+    <a href="category/setsuyaku.html"><span class="cat-emoji">💰</span>節約・家計</a>
+    
+    <a href="category/seido.html"><span class="cat-emoji">📋</span>制度・給付金</a>
+    
+    <a href="category/hoken.html"><span class="cat-emoji">🏠</span>保険・住まい</a>
+    
+    <a href="category/sagi.html"><span class="cat-emoji">🛡️</span>詐欺対策</a>
+    
+    <a href="category/souzoku.html"><span class="cat-emoji">📖</span>相続・終活</a>
+    
+  </nav>
 </header>
 <p class="disclosure">本サイトはアフィリエイト広告(A8.net等)を利用しています。</p>
 <main>
 
-<h1 class="page-title">新着記事</h1>
-<ul class="article-list">
+<section class="hero">
+  <h1>50代からのお金の不安を、<br>ひとつずつ解消していくサイトです</h1>
+  <p>年金・節約・給付金・詐欺対策——。難しい制度の話を、<strong>やさしい言葉と具体的な数字</strong>でお届けします。</p>
+  <ul class="trust-points">
+    <li><span class="trust-icon">📖</span>専門用語をかみ砕いて解説</li>
+    <li><span class="trust-icon">🔍</span>制度は公式情報の確認先もご案内</li>
+    <li><span class="trust-icon">✅</span>広告には必ず「PR」表記</li>
+  </ul>
+</section>
 
-  <li class="article-card">
-    <a href="articles/nenkin-kurisage-84percent.html">
-      <span class="article-date">2026-07-11</span>
-      <span class="article-title">年金の繰り下げ受給で最大84%増額?仕組みと注意点をわかりやすく解説</span>
-      <span class="article-lead">65歳から受け取れる年金は、開始時期を遅らせることで金額が増える仕組みがあります。その仕組みと注意点を解説します。</span>
+<section>
+  <h2 class="section-title">カテゴリから探す</h2>
+  <div class="cat-grid">
+  
+    <a class="cat-card" href="category/nenkin.html">
+      <span class="cat-card-emoji">🏦</span>
+      <span class="cat-card-name">年金</span>
+      <span class="cat-card-desc">受け取り方・手続き・増やし方。年金を1円でも多く、確実に受け取るための知識。</span>
+      <span class="cat-card-count">1件の記事</span>
     </a>
-  </li>
+  
+    <a class="cat-card" href="category/setsuyaku.html">
+      <span class="cat-card-emoji">💰</span>
+      <span class="cat-card-name">節約・家計</span>
+      <span class="cat-card-desc">毎日の出費を無理なく減らすコツ。固定費の見直しから買い物術まで。</span>
+      <span class="cat-card-count">0件の記事</span>
+    </a>
+  
+    <a class="cat-card" href="category/seido.html">
+      <span class="cat-card-emoji">📋</span>
+      <span class="cat-card-name">制度・給付金</span>
+      <span class="cat-card-desc">知らないと損する公的制度や給付金。申請すればもらえるお金の情報。</span>
+      <span class="cat-card-count">0件の記事</span>
+    </a>
+  
+    <a class="cat-card" href="category/hoken.html">
+      <span class="cat-card-emoji">🏠</span>
+      <span class="cat-card-name">保険・住まい</span>
+      <span class="cat-card-desc">保険の見直しと住まいの備え。払いすぎを防ぎ、これからに備える。</span>
+      <span class="cat-card-count">0件の記事</span>
+    </a>
+  
+    <a class="cat-card" href="category/sagi.html">
+      <span class="cat-card-emoji">🛡️</span>
+      <span class="cat-card-name">詐欺対策</span>
+      <span class="cat-card-desc">還付金詐欺・電話詐欺の最新手口と対策。大切なお金を守るために。</span>
+      <span class="cat-card-count">0件の記事</span>
+    </a>
+  
+    <a class="cat-card" href="category/souzoku.html">
+      <span class="cat-card-emoji">📖</span>
+      <span class="cat-card-name">相続・終活</span>
+      <span class="cat-card-desc">家族がもめないための相続準備とエンディングノート。今からできる備え。</span>
+      <span class="cat-card-count">0件の記事</span>
+    </a>
+  
+  </div>
+</section>
 
-</ul>
+<section>
+  <h2 class="section-title">新着記事</h2>
+  <ul class="article-list">
+  
+    <li class="article-card">
+      <a href="articles/nenkin-kurisage-84percent.html">
+        <span class="article-meta">
+          <span class="article-date">2026-07-11</span>
+          <span class="cat-chip">🏦 年金</span>
+        </span>
+        <span class="article-title">年金の繰り下げ受給で最大84%増額?仕組みと注意点をわかりやすく解説</span>
+        <span class="article-lead">65歳から受け取れる年金は、開始時期を遅らせることで金額が増える仕組みがあります。その仕組みと注意点を解説します。</span>
+      </a>
+    </li>
+  
+  </ul>
+</section>
 
 </main>
 <footer class="site-footer">
+  <nav class="footer-nav" aria-label="サイト情報">
+    <a href="about.html">運営者情報</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+    <a href="disclaimer.html">免責事項</a>
+  </nav>
   <p>※当サイトは一般的な情報の提供を目的としており、特定の金融商品の勧誘や個別の投資助言を行うものではありません。制度の内容は変更される場合がありますので、最新情報は公式サイトでご確認ください。</p>
-  <p>&copy; 2026 50代からのお金の教科書</p>
+  <p class="copyright">&copy; 2026 50代からのお金の教科書</p>
 </footer>
+<script>
+  function setFontSize(large) {
+    document.documentElement.classList.toggle("large-text", large);
+    localStorage.setItem("fontSize", large ? "large" : "normal");
+    updateFontButtons();
+  }
+  function updateFontButtons() {
+    var large = document.documentElement.classList.contains("large-text");
+    document.getElementById("font-normal").classList.toggle("active", !large);
+    document.getElementById("font-large").classList.toggle("active", large);
+  }
+  updateFontButtons();
+</script>
 </body>
 </html>

@@ -1,17 +1,46 @@
 {% extends "base.html" %}
 {% block content %}
-<h1 class="page-title">新着記事</h1>
-<ul class="article-list">
-{% for a in articles %}
-  <li class="article-card">
-    <a href="articles/{{ a.slug }}.html">
-      <span class="article-date">{{ a.date }}</span>
-      <span class="article-title">{{ a.title }}</span>
-      <span class="article-lead">{{ a.lead }}</span>
+<section class="hero">
+  <h1>50代からのお金の不安を、<br>ひとつずつ解消していくサイトです</h1>
+  <p>年金・節約・給付金・詐欺対策——。難しい制度の話を、<strong>やさしい言葉と具体的な数字</strong>でお届けします。</p>
+  <ul class="trust-points">
+    <li><span class="trust-icon">📖</span>専門用語をかみ砕いて解説</li>
+    <li><span class="trust-icon">🔍</span>制度は公式情報の確認先もご案内</li>
+    <li><span class="trust-icon">✅</span>広告には必ず「PR」表記</li>
+  </ul>
+</section>
+
+<section>
+  <h2 class="section-title">カテゴリから探す</h2>
+  <div class="cat-grid">
+  {% for c in categories %}
+    <a class="cat-card" href="category/{{ c.slug }}.html">
+      <span class="cat-card-emoji">{{ c.emoji }}</span>
+      <span class="cat-card-name">{{ c.name }}</span>
+      <span class="cat-card-desc">{{ c.description }}</span>
+      <span class="cat-card-count">{{ counts.get(c.slug, 0) }}件の記事</span>
     </a>
-  </li>
-{% else %}
-  <li>記事はまだありません。</li>
-{% endfor %}
-</ul>
+  {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">新着記事</h2>
+  <ul class="article-list">
+  {% for a in articles %}
+    <li class="article-card">
+      <a href="articles/{{ a.slug }}.html">
+        <span class="article-meta">
+          <span class="article-date">{{ a.date }}</span>
+          <span class="cat-chip">{{ a.category_emoji }} {{ a.category_name }}</span>
+        </span>
+        <span class="article-title">{{ a.title }}</span>
+        <span class="article-lead">{{ a.lead }}</span>
+      </a>
+    </li>
+  {% else %}
+    <li class="no-articles">記事は準備中です。もうしばらくお待ちください。</li>
+  {% endfor %}
+  </ul>
+</section>
 {% endblock %}
