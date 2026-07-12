@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>安心お金の価値観・リスク診断(無料・60秒) | 50代からのお金の教科書</title>
-<meta name="description" content="かんたん3問・約60秒。あなたの「お金の価値観タイプ」と将来の備えのヒントがわかる無料診断です。文字入力は不要、ボタンを押すだけ。">
+<title>安心お金の価値観・リスク診断(無料・全10問) | 50代からのお金の教科書</title>
+<meta name="description" content="全10問・約2分。3つの価値観軸と重点テーマから、あなたの「お金の性格タイプ」を24通りで緻密に分析する無料診断。文字入力は不要、ボタンを押すだけ。">
 <meta name="robots" content="index, follow">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2246%22 fill=%22%23C9A227%22/><text x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22 fill=%22%23152449%22 font-weight=%22bold%22>¥</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,6 @@
   --card-border: #E4DFD2;
   --line-green: #06C755;
   --shadow: 0 2px 10px rgba(21, 36, 73, 0.08);
-  --shadow-hover: 0 8px 24px rgba(21, 36, 73, 0.16);
   --font-heading: "Zen Maru Gothic", "BIZ UDPGothic", "Hiragino Sans", "Meiryo", sans-serif;
   --font-body: "BIZ UDPGothic", "BIZ UDGothic", "Hiragino Sans", "Meiryo", sans-serif;
 }
@@ -42,7 +41,6 @@ body {
   flex-direction: column;
 }
 
-/* ---------- ヘッダー(最小限・離脱ポイントを作らない) ---------- */
 .quiz-header {
   background: linear-gradient(155deg, #101B3A 0%, var(--navy) 55%, var(--navy-2) 100%);
   border-bottom: 4px solid var(--gold-soft);
@@ -66,7 +64,14 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
   font-weight: bold;
   color: var(--navy);
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
+}
+.progress-cheer {
+  font-size: 14px;
+  color: #8A6D10;
+  text-align: center;
+  min-height: 1.6em;
+  margin-bottom: 6px;
 }
 .progress-track {
   height: 14px;
@@ -76,13 +81,13 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
 }
 .progress-fill {
   height: 100%;
-  width: 5%;
+  width: 8%;
   background: linear-gradient(90deg, var(--gold), var(--gold-soft));
   border-radius: 7px;
   transition: width 0.6s ease;
 }
 
-/* ---------- 画面(スライド切替) ---------- */
+/* ---------- 画面切替 ---------- */
 .screen { display: none; }
 .screen.active { display: block; animation: slideIn 0.45s ease both; }
 @keyframes slideIn {
@@ -122,7 +127,47 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
   margin: 0 0 26px;
 }
 
-/* 選択肢ボタン: 大きく・押しやすく */
+/* ---------- スタート画面 ---------- */
+.intro-title {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--navy);
+  line-height: 1.6;
+  margin: 6px 0 10px;
+}
+.intro-sub { font-size: 16px; color: var(--text-sub); margin: 0 0 20px; }
+.intro-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  text-align: left;
+  background: var(--cream);
+  border-radius: 14px;
+  padding: 16px 20px;
+}
+.intro-points li { padding: 6px 0 6px 34px; position: relative; font-size: 16px; }
+.intro-points li::before { content: "✅"; position: absolute; left: 2px; }
+.start-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(160deg, var(--navy-2), var(--navy));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 21px;
+  font-weight: 900;
+  border: 2px solid var(--gold-soft);
+  border-radius: 50px;
+  padding: 20px 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(21, 36, 73, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+  line-height: 1.5;
+}
+.start-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(21, 36, 73, 0.45); }
+.intro-privacy { font-size: 13px; color: var(--text-sub); margin-top: 14px; }
+
+/* ---------- 選択肢 ---------- */
 .choice-list { display: flex; flex-direction: column; gap: 14px; }
 .choice-btn {
   display: flex;
@@ -164,12 +209,50 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
   padding: 8px;
 }
 
-/* ---------- 分析中画面 ---------- */
+/* ---------- 中間フィードバック ---------- */
+.mid-badge { font-size: 46px; margin-bottom: 6px; }
+.mid-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--navy);
+  margin: 0 0 14px;
+}
+.mid-tendency {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 900;
+  color: #8A6D10;
+  background: var(--gold-pale);
+  border: 2px solid var(--gold-soft);
+  border-radius: 14px;
+  padding: 8px 22px;
+  margin-bottom: 16px;
+}
+.mid-desc { font-size: 17px; margin: 0 0 24px; }
+.mid-btn {
+  display: block;
+  width: 100%;
+  background: linear-gradient(160deg, var(--navy-2), var(--navy));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 900;
+  border: 2px solid var(--gold-soft);
+  border-radius: 50px;
+  padding: 18px 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(21, 36, 73, 0.35);
+  line-height: 1.5;
+}
+
+/* ---------- 分析中 ---------- */
 .analyzing-card { text-align: center; padding: 48px 26px; }
 .spinner {
   width: 74px;
   height: 74px;
-  margin: 0 auto 26px;
+  margin: 0 auto 20px;
   border-radius: 50%;
   border: 8px solid var(--gold-pale);
   border-top-color: var(--gold);
@@ -177,6 +260,13 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation-duration: 2.5s; } }
+.analyzing-percent {
+  font-family: var(--font-heading);
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
 .analyzing-msg {
   font-family: var(--font-heading);
   font-size: 20px;
@@ -186,7 +276,7 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
 }
 .analyzing-note { font-size: 15px; color: var(--text-sub); }
 
-/* ---------- 結果画面 ---------- */
+/* ---------- 結果 ---------- */
 .result-badge {
   display: inline-flex;
   align-items: center;
@@ -215,25 +305,72 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
   background: var(--cream);
   border-radius: 12px;
   padding: 14px 18px;
-  margin: 0 0 22px;
+  margin: 0 0 24px;
   line-height: 1.8;
 }
-.result-traits {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 22px;
+
+/* 3軸バランスメーター */
+.meter-box {
   text-align: left;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  background: #FFFDF6;
 }
+.meter-box-title {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 12px;
+  text-align: center;
+}
+.meter-row { margin-bottom: 14px; }
+.meter-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--text-sub);
+  margin-bottom: 4px;
+}
+.meter-labels .strong-side { color: var(--navy); font-size: 15px; }
+.meter-track {
+  height: 12px;
+  background: #E9E4D6;
+  border-radius: 6px;
+  position: relative;
+}
+.meter-dot {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background: var(--gold);
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.result-traits { list-style: none; padding: 0; margin: 0 0 22px; text-align: left; }
 .result-traits li {
   padding: 10px 0 10px 38px;
   position: relative;
   border-bottom: 1px dashed var(--card-border);
   font-size: 18px;
 }
-.result-traits li::before {
-  content: "✅";
-  position: absolute;
-  left: 4px;
+.result-traits li::before { content: "✅"; position: absolute; left: 4px; }
+
+.result-strength {
+  text-align: left;
+  background: var(--gold-pale);
+  border: 2px solid var(--gold-soft);
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-size: 17px;
+  margin-bottom: 16px;
 }
 .result-risk {
   text-align: left;
@@ -242,11 +379,20 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
   border-radius: 14px;
   padding: 16px 20px;
   font-size: 17px;
+  margin-bottom: 16px;
+}
+.result-theme {
+  text-align: left;
+  background: var(--cream);
+  border: 2px dashed var(--gold);
+  border-radius: 14px;
+  padding: 16px 20px;
+  font-size: 17px;
   margin-bottom: 28px;
 }
-.result-risk strong { color: var(--navy); }
+.result-strength strong, .result-risk strong, .result-theme strong { color: var(--navy); }
 
-/* LINE誘導ボックス */
+/* LINE誘導 */
 .line-box {
   background: linear-gradient(135deg, #F0FFF5, #E3FAEC);
   border: 2px solid var(--line-green);
@@ -303,7 +449,6 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
   color: #8B8E96;
   line-height: 1.8;
 }
-
 .quiz-footer {
   background: var(--navy);
   color: #8B97BC;
@@ -322,81 +467,75 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
 
 <main>
   <div class="progress-wrap">
-    <div class="progress-label" id="progressLabel">質問 1 / 3</div>
+    <div class="progress-label" id="progressLabel">準備完了</div>
+    <div class="progress-cheer" id="progressCheer"></div>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   </div>
 
-  <!-- ステップ1: ライフスタイル -->
-  <section class="screen active" id="screen-q1" aria-label="質問1">
+  <!-- スタート画面 -->
+  <section class="screen active" id="screen-intro" aria-label="診断のご案内">
     <div class="quiz-card">
       <span class="quiz-eyebrow">🔍 安心お金の価値観・リスク診断</span>
-      <h1 class="quiz-question">理想のセカンドライフ(定年後)の過ごし方は、どちらに近いですか?</h1>
-      <div class="choice-list">
-        <button type="button" class="choice-btn" data-step="life" data-value="active">
-          <span class="choice-emoji">🏕️</span><span>趣味や旅行を<br>アクティブに楽しみたい</span>
-        </button>
-        <button type="button" class="choice-btn" data-step="life" data-value="home">
-          <span class="choice-emoji">🏡</span><span>自宅で家族と<br>穏やかに過ごしたい</span>
-        </button>
-      </div>
+      <h1 class="intro-title">あなたの「お金の性格」を<br>3つの軸で緻密に分析します</h1>
+      <p class="intro-sub">全10問・約2分・文字入力はありません</p>
+      <ul class="intro-points">
+        <li>質問はぜんぶ<strong>ボタンを押すだけ</strong></li>
+        <li>3つの価値観軸+重点テーマで<strong>24通り</strong>に分析</li>
+        <li>結果はその場ですぐ表示されます</li>
+      </ul>
+      <button type="button" class="start-btn" id="startBtn">診断をはじめる(無料)</button>
+      <p class="intro-privacy">🔒 回答はお使いの端末の中だけで処理され、外部には送信されません。</p>
     </div>
   </section>
 
-  <!-- ステップ2: 性格・お金の傾向 -->
-  <section class="screen" id="screen-q2" aria-label="質問2">
+  <!-- 質問画面(内容を差し替えて使い回す) -->
+  <section class="screen" id="screen-question" aria-label="質問">
     <div class="quiz-card">
       <span class="quiz-eyebrow">🔍 安心お金の価値観・リスク診断</span>
-      <h1 class="quiz-question">買い物やお金を使うとき、ご自身の性格は?</h1>
-      <div class="choice-list">
-        <button type="button" class="choice-btn" data-step="money" data-value="saver">
-          <span class="choice-emoji">📊</span><span>計画的に<br>しっかり貯めたい派</span>
-        </button>
-        <button type="button" class="choice-btn" data-step="money" data-value="spender">
-          <span class="choice-emoji">🛍️</span><span>良いものには<br>惜しみなく使いたい派</span>
-        </button>
-      </div>
-      <button type="button" class="back-btn" data-back="q1">◀ 前の質問に戻る</button>
+      <h1 class="quiz-question" id="questionText"></h1>
+      <div class="choice-list" id="choiceList"></div>
+      <button type="button" class="back-btn" id="backBtn">◀ 前の質問に戻る</button>
     </div>
   </section>
 
-  <!-- ステップ3: 最大の関心事 -->
-  <section class="screen" id="screen-q3" aria-label="質問3">
+  <!-- 中間フィードバック(5問目のあと) -->
+  <section class="screen" id="screen-midpoint" aria-label="中間分析">
     <div class="quiz-card">
-      <span class="quiz-eyebrow">🔍 安心お金の価値観・リスク診断</span>
-      <h1 class="quiz-question">これから先の生活で、一番「これだけは備えておきたい」と思うものは?</h1>
-      <div class="choice-list">
-        <button type="button" class="choice-btn" data-step="concern" data-value="nenkin">
-          <span class="choice-emoji">🏦</span><span>年金・生活費の安定</span>
-        </button>
-        <button type="button" class="choice-btn" data-step="concern" data-value="hoken">
-          <span class="choice-emoji">🏠</span><span>保険・医療費の備え</span>
-        </button>
-        <button type="button" class="choice-btn" data-step="concern" data-value="souzoku">
-          <span class="choice-emoji">📖</span><span>家族への相続・終活</span>
-        </button>
-      </div>
-      <button type="button" class="back-btn" data-back="q2">◀ 前の質問に戻る</button>
+      <div class="mid-badge">📊</div>
+      <h2 class="mid-title">ここまでの中間分析…</h2>
+      <div class="mid-tendency" id="midTendency"></div>
+      <p class="mid-desc">の傾向が出ています。<br>残り5問で、<strong>8タイプ×3テーマ</strong>のどれに当てはまるかが確定します。</p>
+      <button type="button" class="mid-btn" id="midBtn">続きへ(あと5問)</button>
     </div>
   </section>
 
-  <!-- ステップ4: 分析中(3秒の演出) -->
+  <!-- 分析中(4秒の演出) -->
   <section class="screen" id="screen-analyzing" aria-label="分析中">
     <div class="quiz-card analyzing-card">
       <div class="spinner" role="img" aria-label="分析中"></div>
+      <div class="analyzing-percent" id="analyzingPercent">0%</div>
       <p class="analyzing-msg" id="analyzingMsg">回答内容を確認しています…</p>
-      <p class="analyzing-note">あなたの「お金の価値観タイプ」と「将来のリスク」を分析中です。<br>そのままお待ちください。</p>
+      <p class="analyzing-note">10問の回答から「3つの価値観軸」と「重点テーマ」を分析しています。<br>そのままお待ちください。</p>
     </div>
   </section>
 
-  <!-- ステップ5: 診断結果 + LINE誘導 -->
+  <!-- 診断結果 + LINE誘導 -->
   <section class="screen" id="screen-result" aria-label="診断結果">
     <div class="quiz-card">
-      <div class="result-badge" id="resultEmoji">🛡️</div>
-      <p class="result-type-label">あなたのお金の価値観タイプは…</p>
+      <div class="result-badge" id="resultEmoji">🏰</div>
+      <p class="result-type-label">あなたのお金の性格タイプは…</p>
       <h1 class="result-type-name" id="resultName"></h1>
       <p class="result-headline" id="resultHeadline"></p>
+
+      <div class="meter-box">
+        <p class="meter-box-title">📈 あなたの価値観バランス(10問の回答から算出)</p>
+        <div id="meterArea"></div>
+      </div>
+
       <ul class="result-traits" id="resultTraits"></ul>
+      <div class="result-strength" id="resultStrength"></div>
       <div class="result-risk" id="resultRisk"></div>
+      <div class="result-theme" id="resultTheme"></div>
 
       <div class="line-box">
         <p class="line-box-title" id="lineTitle"></p>
@@ -436,149 +575,312 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
 
   var LINE_URL = "";
 
-  /* ---------- 4タイプの定義 ---------- */
+  /* ==========================================================
+     質問定義: 3軸(se/pf/kj)×各3問 + 重点テーマ(concern)×2問
+     se: E=充実志向 / S=安定志向
+     pf: P=計画派   / F=直感派
+     kj: K=家族優先 / J=マイペース
+     ========================================================== */
+  var QUESTIONS = [
+    { axis: "se", q: "理想のセカンドライフ(定年後)に近いのは、どちらですか?", choices: [
+      { e: "🏕️", t: "旅行や趣味を楽しむ、にぎやかな毎日", v: "E" },
+      { e: "🏡", t: "自宅でゆったり、穏やかな毎日", v: "S" } ] },
+    { axis: "pf", q: "旅行に行くとしたら、あなたはどちら派?", choices: [
+      { e: "🗺️", t: "行き先も予算も、事前にしっかり計画", v: "P" },
+      { e: "🎒", t: "その場の気分で自由に動きたい", v: "F" } ] },
+    { axis: "kj", q: "もし臨時収入が10万円入ったら、まず何に使いますか?", choices: [
+      { e: "👨‍👩‍👧", t: "家族との食事や、孫へのプレゼントに", v: "K" },
+      { e: "🎨", t: "自分の趣味や楽しみのために", v: "J" } ] },
+    { axis: "se", q: "「もったいない」と感じるのは、どちらですか?", choices: [
+      { e: "✨", t: "お金を使わないまま、人生が終わること", v: "E" },
+      { e: "💸", t: "必要以上に、お金を使ってしまうこと", v: "S" } ] },
+    { axis: "pf", q: "毎月の家計は、どうやって把握していますか?", choices: [
+      { e: "📒", t: "家計簿やメモで、しっかり記録している", v: "P" },
+      { e: "💭", t: "だいたい頭の中で、ざっくり把握", v: "F" } ] },
+    { axis: "kj", q: "大きな買い物を決めるとき、あなたは?", choices: [
+      { e: "💬", t: "家族に相談してから決めたい", v: "K" },
+      { e: "⚡", t: "自分の判断で、さっと決める", v: "J" } ] },
+    { axis: "concern", q: "これから先、「これだけは備えておきたい」と思うのは?", choices: [
+      { e: "🏦", t: "年金・毎月の生活費の安定", v: "nenkin" },
+      { e: "🏥", t: "急な病気・介護への備え", v: "hoken" },
+      { e: "📖", t: "家族への相続・終活の準備", v: "souzoku" } ] },
+    { axis: "se", q: "通帳の残高が増えていくのを見ると?", choices: [
+      { e: "🤔", t: "うれしいけど、使わないのも少しもったいない", v: "E" },
+      { e: "😊", t: "何より安心。眺めるのが楽しみ", v: "S" } ] },
+    { axis: "pf", q: "お得な制度やサービスを知ったら?", choices: [
+      { e: "🔍", t: "自分で調べて、比較してから使う", v: "P" },
+      { e: "👂", t: "詳しい人にすすめられたら使ってみる", v: "F" } ] },
+    { axis: "concern", q: "最後の質問です。夜ふと気になるとしたら、どれが近いですか?", choices: [
+      { e: "💰", t: "この先の生活費、足りるかな", v: "nenkin" },
+      { e: "🏥", t: "急に病気や介護になったら、どうしよう", v: "hoken" },
+      { e: "👪", t: "家族に負担や迷惑をかけないかな", v: "souzoku" } ] }
+  ];
+
+  /* ---------- 8タイプの定義 (se + pf + kj の組み合わせ) ---------- */
   var TYPES = {
-    shincho: {
-      emoji: "🛡️",
-      name: "慎重派・年金対策タイプ",
-      headline: "堅実さがいちばんの強み。「年金の受け取り方」を知ると、その堅実さがもっと活きるタイプです。",
-      traits: [
-        "大きな決断は、じっくり考えてから動きたい",
-        "派手さより「毎月の安心」を大切にしている",
-        "制度の正しい知識を知れば、確実に活かせる"
-      ],
-      risk: "<strong>気をつけたいポイント:</strong> 慎重なぶん「手続きすれば受け取れるお金」や「年金を増やせる制度」の情報を、つい後回しにしてしまう傾向があります。知っているかどうかだけで差がつく部分です。",
-      lineTitle: "🎁 慎重派のあなたへ:「年金・生活費の安心チェックリスト」つき"
-    },
-    jujitsu: {
-      emoji: "🌅",
-      name: "充実派・資産防衛タイプ",
-      headline: "人生を楽しむ力が強み。「使いながら、守る」の両立ができると、楽しみが長続きするタイプです。",
-      traits: [
-        "趣味や旅行など、セカンドライフの楽しみが明確",
-        "使うところにはしっかり使う、メリハリ型",
-        "楽しみを支える「土台のお金」を整えると強い"
-      ],
-      risk: "<strong>気をつけたいポイント:</strong> 楽しみを優先するあまり、固定費や保障の見直しなど「守りの点検」が後回しになりがちです。楽しみを続けるためにこそ、年に一度の点検が効きます。",
-      lineTitle: "🎁 充実派のあなたへ:「楽しみを守る資産防衛メモ」つき"
-    },
-    kazoku: {
-      emoji: "👨‍👩‍👧",
-      name: "家族思い・あんしん備えタイプ",
-      headline: "ご家族への思いやりが強み。「備えの順番」を整えるだけで、安心がぐっと大きくなるタイプです。",
-      traits: [
-        "自分のことより、家族のことをつい優先しがち",
-        "医療・介護・相続など「もしも」への関心が高い",
-        "備えの全体像が見えると、心がとても軽くなる"
-      ],
-      risk: "<strong>気をつけたいポイント:</strong> 「家族のため」という気持ちから、優先順位が曖昧なまま保険料などを払いすぎてしまう場合があります。備えは金額より「順番」が大切です。",
-      lineTitle: "🎁 家族思いのあなたへ:「もしもの備え・優先順位シート」つき"
-    },
-    yutori: {
-      emoji: "💡",
-      name: "ゆとり創出・固定費見直しタイプ",
-      headline: "コツコツ貯める力はバッチリ。「固定費のムダとり」で、さらに毎月のゆとりが生まれるタイプです。",
-      traits: [
-        "計画的にお金を管理するのが得意",
-        "日々の節約への意識がもともと高い",
-        "「効果の大きい見直し」の情報と相性抜群"
-      ],
-      risk: "<strong>気をつけたいポイント:</strong> 日々の節約をがんばるぶん、スマホ代・保険料・電気代など「一度の見直しで毎月効く固定費」が意外と手つかずのことがあります。",
-      lineTitle: "🎁 ゆとり創出派のあなたへ:「固定費の見直し順リスト」つき"
-    }
+    EPK: { emoji: "🌸", name: "家族と楽しむ計画派タイプ",
+      headline: "計画力と家族への愛情のバランス型。「楽しみ上手な司令塔」です。",
+      traits: ["家族のイベントや旅行の幹事役になりがち", "使うときは使う、締めるときは締めるメリハリ型", "先の見通しが立っていると安心して楽しめる"],
+      strength: "<strong>あなたの強み:</strong> 「楽しみの計画」と「お金の管理」を両立できる、いちばんバランスの良いタイプです。",
+      risk: "<strong>気をつけたいポイント:</strong> 家族のための出費がふくらみがち。「楽しみ予算」を先に決めておくと、罪悪感なく使えます。" },
+    EPJ: { emoji: "✈️", name: "人生設計エンジョイタイプ",
+      headline: "やりたいことに向かって計画的に進む、行動派。「攻めの人生設計」が得意です。",
+      traits: ["セカンドライフでやりたいことが具体的にある", "目標のためなら、コツコツ準備も苦にならない", "自分の時間とお金の使い方は自分で決めたい"],
+      strength: "<strong>あなたの強み:</strong> 目標から逆算してお金を準備できる、計画実行力の持ち主です。",
+      risk: "<strong>気をつけたいポイント:</strong> 「攻め」の計画は得意でも、保障や制度など「守り」の点検が後回しになりがちです。" },
+    EFK: { emoji: "🎁", name: "気前のいい太陽タイプ",
+      headline: "家族の笑顔のためならパッと使える、周りを明るくする存在です。",
+      traits: ["孫や家族へのプレゼントについ財布がゆるむ", "細かい計算より「その場の喜び」を大切にする", "周りから頼られる、面倒見のいい性格"],
+      strength: "<strong>あなたの強み:</strong> お金を「家族の思い出」に変えるのが上手な、豊かな使い手です。",
+      risk: "<strong>気をつけたいポイント:</strong> 気前の良さのぶん、固定費や保険など「毎月出ていくお金」の点検が漏れがちです。" },
+    EFJ: { emoji: "🌅", name: "自由を楽しむ冒険派タイプ",
+      headline: "今この瞬間を大切にする、人生の楽しみ名人です。",
+      traits: ["「やってみたい」と思ったら行動が早い", "細かい家計管理は正直ちょっと苦手", "我慢をためこむより、楽しみに使いたい"],
+      strength: "<strong>あなたの強み:</strong> お金を人生の楽しみに変える力は、8タイプでいちばんです。",
+      risk: "<strong>気をつけたいポイント:</strong> どんぶり勘定になりやすく、スマホ代や保険料などの固定費のムダに気づきにくい傾向があります。" },
+    SPK: { emoji: "🏰", name: "家族を守る堅実派タイプ",
+      headline: "石橋を叩いて渡る、頼れる「家計の番人」です。",
+      traits: ["家族のための貯えを何より大切にしている", "大きな決断は、しっかり調べてから", "「万が一」への備えを常に考えている"],
+      strength: "<strong>あなたの強み:</strong> 慎重さと家族への責任感で、堅実に資産を守れるタイプです。",
+      risk: "<strong>気をつけたいポイント:</strong> 「安心のため」の保険が重なって、払いすぎになっている場合があります。備えは金額より優先順位です。" },
+    SPJ: { emoji: "📘", name: "コツコツ堅実プランナータイプ",
+      headline: "自分のペースで着実に積み上げる、管理上手な努力家です。",
+      traits: ["家計簿や記録をつけるのが習慣になっている", "セールや衝動買いには流されにくい", "自分で調べて納得してから動きたい"],
+      strength: "<strong>あなたの強み:</strong> 計画と記録の力で、お金の流れを正確に把握できるタイプです。",
+      risk: "<strong>気をつけたいポイント:</strong> 慎重すぎて「申請すればもらえる制度」を使わずに逃すことも。知識がそのまま得になるタイプです。" },
+    SFK: { emoji: "🛡️", name: "家族思いのあんしん第一タイプ",
+      headline: "難しい計算より「家族の安心」を直感で選べる、思いやりの人です。",
+      traits: ["家族が安心できるなら、多少の出費は仕方ないと思う", "細かい比較検討は、正直ちょっと面倒", "「もしも」の話になると、つい心配になる"],
+      strength: "<strong>あなたの強み:</strong> 家族への思いやりを軸に、ブレない判断ができるタイプです。",
+      risk: "<strong>気をつけたいポイント:</strong> すすめられるまま入った保険をそのままにしがち。「本当に必要な備え」の仕分けが効きます。" },
+    SFJ: { emoji: "🍵", name: "マイペース安定タイプ",
+      headline: "欲張らず、穏やかさをいちばん大切にする、落ち着きの人です。",
+      traits: ["大きな贅沢より、いつも通りの毎日が心地よい", "お金の手続きや見直しは、つい先延ばしにしがち", "自分のペースを乱されるのが苦手"],
+      strength: "<strong>あなたの強み:</strong> 無理な浪費をしない、安定した金銭感覚の持ち主です。",
+      risk: "<strong>気をつけたいポイント:</strong> 手続きの先延ばしで、受け取れるお金や割引を見逃していることも。「1回だけの手続き」から始めるのがおすすめです。" }
   };
 
-  /* ---------- 回答から4タイプを判定する分岐ロジック ----------
-     優先順位:
-     1) 関心が「保険・医療」または「相続・終活」→ 家族思い・あんしん備えタイプ
-     2) 関心が「年金」× ライフスタイルがアクティブ → 充実派・資産防衛タイプ
-     3) 関心が「年金」× おうち派 × 貯めたい派 → ゆとり創出・固定費見直しタイプ
-     4) それ以外(年金 × おうち派 × 使いたい派)→ 慎重派・年金対策タイプ */
-  function judgeType(a) {
-    if (a.concern === "hoken" || a.concern === "souzoku") return "kazoku";
-    if (a.life === "active") return "jujitsu";
-    if (a.money === "saver") return "yutori";
-    return "shincho";
+  /* ---------- 重点テーマ別のアドバイスとLINE特典 ---------- */
+  var THEMES = {
+    nenkin: {
+      label: "年金・生活費",
+      advice: "<strong>🏦 あなたの重点テーマ: 年金・生活費</strong><br>年金は「受け取り方」を知っているかどうかで、毎月の金額が変わる制度がいくつもあります。まずは仕組みを知ることが、いちばんの安心材料になります。",
+      magnet: "年金・生活費の安心チェックリスト" },
+    hoken: {
+      label: "医療・介護の備え",
+      advice: "<strong>🏥 あなたの重点テーマ: 医療・介護の備え</strong><br>日本には高額療養費制度など、意外と手厚い公的なカバーがあります。それを知ったうえで民間保険を見直すと、「入りすぎ」と「足りない」の両方が見えてきます。",
+      magnet: "医療・介護の備え 優先順位シート" },
+    souzoku: {
+      label: "相続・終活",
+      advice: "<strong>📖 あなたの重点テーマ: 相続・終活</strong><br>相続の準備は「早すぎる」ことがありません。書き出す・話しておく・調べておく——順番を知るだけで、ご家族の負担は大きく減らせます。",
+      magnet: "相続・終活 はじめの一歩シート" }
+  };
+
+  /* 軸メーター表示用 */
+  var AXES_META = {
+    se: { left: { v: "S", label: "安定重視" }, right: { v: "E", label: "楽しみ重視" } },
+    pf: { left: { v: "P", label: "計画派" },   right: { v: "F", label: "直感派" } },
+    kj: { left: { v: "K", label: "家族優先" }, right: { v: "J", label: "マイペース" } }
+  };
+  var TENDENCY_WORDS = {
+    E: "楽しみ重視", S: "安定重視", P: "計画派", F: "直感派", K: "家族優先", J: "マイペース"
+  };
+
+  /* ==========================================================
+     画面制御
+     ========================================================== */
+  var answers = [];   // {axis, v}
+  var idx = 0;
+  var midShown = false;
+
+  var el = function (id) { return document.getElementById(id); };
+
+  function setProgress(label, cheer, fillPercent) {
+    el("progressLabel").textContent = label;
+    el("progressCheer").textContent = cheer || "";
+    el("progressFill").style.width = fillPercent + "%";
   }
 
-  /* ---------- 画面制御 ---------- */
-  var answers = { life: null, money: null, concern: null };
-  var flow = ["q1", "q2", "q3"];
-  var progress = {
-    q1: { label: "質問 1 / 3", fill: "12%" },
-    q2: { label: "質問 2 / 3", fill: "45%" },
-    q3: { label: "質問 3 / 3", fill: "75%" },
-    analyzing: { label: "分析中…", fill: "92%" },
-    result: { label: "🎉 診断完了!", fill: "100%" }
-  };
-
   function show(screenKey) {
-    document.querySelectorAll(".screen").forEach(function (s) {
-      s.classList.remove("active");
-    });
-    document.getElementById("screen-" + screenKey).classList.add("active");
-    document.getElementById("progressLabel").textContent = progress[screenKey].label;
-    document.getElementById("progressFill").style.width = progress[screenKey].fill;
+    document.querySelectorAll(".screen").forEach(function (s) { s.classList.remove("active"); });
+    var screen = el("screen-" + screenKey);
+    // 同じ画面を使い回してもアニメーションが再発火するようにリフローを挟む
+    void screen.offsetWidth;
+    screen.classList.add("active");
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  /* 選択ボタン */
-  document.querySelectorAll(".choice-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var step = btn.dataset.step;
-      var value = btn.dataset.value;
-      answers[step] = value;
-      btn.classList.add("selected");
-
-      // タップの手応えを見せてから次へ(0.35秒)
-      setTimeout(function () {
-        btn.classList.remove("selected");
-        if (step === "life") show("q2");
-        else if (step === "money") show("q3");
-        else startAnalyzing();
-      }, 350);
-    });
-  });
-
-  /* 戻るボタン */
-  document.querySelectorAll(".back-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      show(btn.dataset.back);
-    });
-  });
-
-  /* ---------- ステップ4: 3秒の分析演出 ---------- */
-  function startAnalyzing() {
-    show("analyzing");
-    var messages = [
-      "回答内容を確認しています…",
-      "あなたの「お金の価値観タイプ」を分析中…",
-      "将来のリスクポイントを整理しています…"
-    ];
-    var el = document.getElementById("analyzingMsg");
-    var i = 0;
-    el.textContent = messages[0];
-    var timer = setInterval(function () {
-      i++;
-      if (i < messages.length) el.textContent = messages[i];
-    }, 1000);
-
-    setTimeout(function () {
-      clearInterval(timer);
-      showResult();
-    }, 3000);
+  /* ---------- 質問の描画 ---------- */
+  function cheerFor(i) {
+    if (i <= 2) return "";
+    if (i <= 4) return "いい調子です👏";
+    if (i <= 6) return "折り返しました!順調です🚶";
+    if (i === 9) return "これが最後の質問です🏁";
+    return "あと" + (10 - i) + "問で結果がわかります✨";
   }
 
-  /* ---------- ステップ5: 結果の動的表示 ---------- */
-  function showResult() {
-    var type = TYPES[judgeType(answers)];
-    document.getElementById("resultEmoji").textContent = type.emoji;
-    document.getElementById("resultName").textContent = type.name;
-    document.getElementById("resultHeadline").textContent = type.headline;
-    document.getElementById("resultRisk").innerHTML = type.risk;
-    document.getElementById("lineTitle").textContent = type.lineTitle;
+  function renderQuestion(i) {
+    var q = QUESTIONS[i];
+    el("questionText").textContent = q.q;
 
-    var ul = document.getElementById("resultTraits");
+    var list = el("choiceList");
+    list.innerHTML = "";
+    q.choices.forEach(function (c) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "choice-btn";
+      btn.innerHTML = '<span class="choice-emoji">' + c.e + "</span><span>" + c.t + "</span>";
+      btn.addEventListener("click", function () { pick(btn, q.axis, c.v); });
+      list.appendChild(btn);
+    });
+
+    el("backBtn").style.visibility = i === 0 ? "hidden" : "visible";
+    var remaining = 10 - i;
+    var label = "質問 " + (i + 1) + " / 10" + (i >= 7 ? "(あと" + remaining + "問)" : "");
+    setProgress(label, cheerFor(i), 8 + (i / 10) * 80);
+    show("question");
+  }
+
+  var locked = false;
+  function pick(btn, axis, v) {
+    if (locked) return;
+    locked = true;
+    btn.classList.add("selected");
+    answers.push({ axis: axis, v: v });
+
+    setTimeout(function () {
+      locked = false;
+      idx++;
+      if (idx === 5 && !midShown) {
+        midShown = true;
+        showMidpoint();
+      } else if (idx >= QUESTIONS.length) {
+        startAnalyzing();
+      } else {
+        renderQuestion(idx);
+      }
+    }, 350);
+  }
+
+  el("backBtn").addEventListener("click", function () {
+    if (idx > 0) {
+      answers.pop();
+      idx--;
+      renderQuestion(idx);
+    }
+  });
+
+  /* ---------- 中間フィードバック(ツァイガルニク効果) ---------- */
+  function tally(axis, v) {
+    return answers.filter(function (a) { return a.axis === axis && a.v === v; }).length;
+  }
+
+  function showMidpoint() {
+    // ここまでで最も票が集まっている極を「傾向」として見せる
+    var best = { word: "バランス型", count: 0 };
+    Object.keys(TENDENCY_WORDS).forEach(function (v) {
+      var axis = "ESPF".indexOf(v) >= 0 ? ("ES".indexOf(v) >= 0 ? "se" : "pf") : "kj";
+      var c = tally(axis, v);
+      if (c > best.count) best = { word: TENDENCY_WORDS[v], count: c };
+    });
+    el("midTendency").textContent = "「" + best.word + "」";
+    setProgress("中間分析", "ここまでの回答を集計しました📊", 48);
+    show("midpoint");
+  }
+
+  el("midBtn").addEventListener("click", function () { renderQuestion(idx); });
+
+  /* ---------- 分析演出(4秒 + %カウンタ = 労力の錯覚) ---------- */
+  function startAnalyzing() {
+    setProgress("分析中…", "10問の回答を集計しています", 94);
+    show("analyzing");
+
+    var messages = [
+      "回答内容を確認しています…",
+      "3つの価値観バランスを計算中…",
+      "あなたの重点テーマを分析中…",
+      "8タイプから診断結果を確定しています…"
+    ];
+    var msgEl = el("analyzingMsg");
+    var i = 0;
+    msgEl.textContent = messages[0];
+    var msgTimer = setInterval(function () {
+      i++;
+      if (i < messages.length) msgEl.textContent = messages[i];
+    }, 1000);
+
+    var pct = 0;
+    var pctEl = el("analyzingPercent");
+    var pctTimer = setInterval(function () {
+      pct = Math.min(pct + 1, 100);
+      pctEl.textContent = pct + "%";
+    }, 38);
+
+    setTimeout(function () {
+      clearInterval(msgTimer);
+      clearInterval(pctTimer);
+      pctEl.textContent = "100%";
+      showResult();
+    }, 4000);
+  }
+
+  /* ---------- 判定ロジック ---------- */
+  function judge() {
+    var se = tally("se", "E") >= 2 ? "E" : "S";
+    var pf = tally("pf", "P") >= 2 ? "P" : "F";
+    var kj = tally("kj", "K") >= 2 ? "K" : "J";
+
+    // 重点テーマ: Q7(意識)とQ10(夜の本音)。異なる場合は「本音」のQ10を優先
+    var conscious = answers[6].v;
+    var deep = answers[9].v;
+    return {
+      typeKey: se + pf + kj,
+      concern: deep,
+      subConcern: conscious !== deep ? conscious : null
+    };
+  }
+
+  /* ---------- 結果表示 ---------- */
+  function renderMeters() {
+    var area = el("meterArea");
+    area.innerHTML = "";
+    Object.keys(AXES_META).forEach(function (axis) {
+      var meta = AXES_META[axis];
+      var leftCount = tally(axis, meta.left.v);   // 0〜3
+      var pos = 50 - (leftCount - 1.5) * 26;      // 3票→11% / 0票→89%
+      var strongLeft = leftCount >= 2;
+
+      var row = document.createElement("div");
+      row.className = "meter-row";
+      row.innerHTML =
+        '<div class="meter-labels">' +
+        '<span class="' + (strongLeft ? "strong-side" : "") + '">◀ ' + meta.left.label + "</span>" +
+        '<span class="' + (!strongLeft ? "strong-side" : "") + '">' + meta.right.label + " ▶</span>" +
+        "</div>" +
+        '<div class="meter-track"><div class="meter-dot" style="left:' + pos + '%"></div></div>';
+      area.appendChild(row);
+    });
+  }
+
+  function showResult() {
+    var r = judge();
+    var type = TYPES[r.typeKey];
+    var theme = THEMES[r.concern];
+
+    el("resultEmoji").textContent = type.emoji;
+    el("resultName").textContent = type.name;
+    el("resultHeadline").textContent = type.headline;
+    el("resultStrength").innerHTML = type.strength;
+    el("resultRisk").innerHTML = type.risk;
+
+    var themeHtml = theme.advice;
+    if (r.subConcern) {
+      themeHtml += '<br><span style="font-size:15px;color:#5A5E68;">※意識の上では「' +
+        THEMES[r.subConcern].label + "」への関心も高めです。あわせてチェックを。</span>";
+    }
+    el("resultTheme").innerHTML = themeHtml;
+
+    var ul = el("resultTraits");
     ul.innerHTML = "";
     type.traits.forEach(function (t) {
       var li = document.createElement("li");
@@ -586,24 +888,34 @@ main { flex: 1; width: 100%; max-width: 640px; margin: 0 auto; padding: 24px 20p
       ul.appendChild(li);
     });
 
-    var lineBtn = document.getElementById("lineBtn");
+    renderMeters();
+
+    el("lineTitle").textContent = "🎁 " + type.name + "のあなたへ:『" + theme.magnet + "』つき";
+
+    var lineBtn = el("lineBtn");
     if (LINE_URL) {
       lineBtn.href = LINE_URL;
     } else {
-      // LINE公式アカウント開設前は「準備中」を表示
       lineBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        document.getElementById("linePreparing").style.display = "block";
+        el("linePreparing").style.display = "block";
       });
     }
+
+    setProgress("🎉 診断完了!", "24通りの中から、あなたのタイプが確定しました", 100);
     show("result");
   }
 
-  /* もう一度診断する */
-  document.getElementById("retryBtn").addEventListener("click", function (e) {
+  /* ---------- 開始・リトライ ---------- */
+  el("startBtn").addEventListener("click", function () { renderQuestion(0); });
+
+  el("retryBtn").addEventListener("click", function (e) {
     e.preventDefault();
-    answers = { life: null, money: null, concern: null };
-    show("q1");
+    answers = [];
+    idx = 0;
+    midShown = false;
+    setProgress("準備完了", "", 8);
+    show("intro");
   });
 })();
 </script>
