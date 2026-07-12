@@ -173,6 +173,29 @@ h1, h2, h3, .site-title, .section-title, .article-title, .cat-card-name {
 }
 .trust-icon { margin-right: 6px; }
 
+.hero-cta {
+  display: inline-block;
+  position: relative;
+  margin-top: 26px;
+  background: linear-gradient(160deg, var(--navy-2), var(--navy));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid var(--gold-soft);
+  border-radius: 50px;
+  padding: 18px 34px;
+  line-height: 1.6;
+  box-shadow: 0 4px 14px rgba(21, 36, 73, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 20px rgba(21, 36, 73, 0.45);
+}
+.hero-cta-note { font-size: 14px; color: var(--text-sub); margin-top: 10px; position: relative; }
+
 .section-title {
   font-size: 25px;
   font-weight: 900;

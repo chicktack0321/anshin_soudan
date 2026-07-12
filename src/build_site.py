@@ -142,12 +142,20 @@ def build_site(cfg: dict) -> Path:
             page_tpl.render(page=p, root="", **ctx_base), encoding="utf-8"
         )
 
+    # 診断オンボーディング (LINE誘導)
+    shindan_tpl = env.get_template("shindan.html")
+    line_url = (cfg.get("line") or {}).get("url", "") or ""
+    (out_dir / "shindan.html").write_text(
+        shindan_tpl.render(line_url=line_url, **ctx_base), encoding="utf-8"
+    )
+
     # sitemap.xml
     base = site_cfg["base_url"].rstrip("/")
     urls = [f"{base}/"]
     urls += [f"{base}/category/{c['slug']}.html" for c in categories]
     urls += [f"{base}/articles/{a['slug']}.html" for a in articles]
     urls += [f"{base}/{p['slug']}.html" for p in pages]
+    urls.append(f"{base}/shindan.html")
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>',
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     sitemap += [f"  <url><loc>{u}</loc></url>" for u in urls]
